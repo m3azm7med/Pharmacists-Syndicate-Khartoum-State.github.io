@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الهيئة النقابية لصيادلة المجتمع – فرعية بحري</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest:   #0D3320;
+    --deep:     #1B4D35;
+    --mid:      #2A6347;
+    --leaf:     #3B7D58;
+    --mint:     #6AAE8C;
+    --pale:     #C9E4D5;
+    --gold:     #C8923A;
+    --gold-lt:  #E8B96A;
+    --cream:    #F9F5ED;
+    --white:    #FFFFFF;
+    --ink:      #1A1A18;
+    --gray:     #5A5A54;
+    --lgray:    #E8E4DC;
+    --r:        0.75rem;
+    --shadow:   0 4px 24px rgba(13,51,32,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ─────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,51,32,0.96);
+    backdrop-filter: blur(12px);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+    border-bottom: 1px solid rgba(200,146,58,0.25);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 0.75rem; text-decoration: none;
+  }
+  .nav-logo {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .nav-logo svg { width: 24px; height: 24px; }
+  .nav-title {
+    color: var(--white);
+    font-size: 0.92rem; font-weight: 600; line-height: 1.3;
+  }
+  .nav-title span { color: var(--gold-lt); font-weight: 300; display: block; font-size: 0.78rem; }
+  .nav-links { display: flex; gap: 0.25rem; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75); text-decoration: none;
+    font-size: 0.88rem; font-weight: 500;
+    padding: 0.4rem 0.85rem; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-lt); background: rgba(255,255,255,0.07); }
+
+  /* ── HERO ────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    background: var(--forest);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 7rem 2rem 4rem;
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.06;
+    background-image:
+      repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%),
+      repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+    background-size: 36px 36px;
+  }
+  .hero-glow {
+    position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,125,88,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(200,146,58,0.15); border: 1px solid rgba(200,146,58,0.4);
+    color: var(--gold-lt); font-size: 0.82rem; font-weight: 500;
+    padding: 0.4rem 1.1rem; border-radius: 100px; margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); display: block; animation: pulse 2s infinite; }
+  .hero-emblem {
+    width: 120px; height: 120px; margin: 0 auto 2rem;
+    position: relative; animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-emblem svg { width: 100%; height: 100%; }
+  .hero h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700; color: var(--white);
+    line-height: 1.25; margin-bottom: 0.75rem;
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+  .hero h1 em { color: var(--gold-lt); font-style: normal; }
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,0.6);
+    max-width: 480px; margin: 0 auto 2.5rem;
+    animation: fadeUp 0.7s 0.25s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.35s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+    color: var(--forest); font-weight: 700; font-size: 0.95rem;
+    padding: 0.75rem 1.75rem; border-radius: 10px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(200,146,58,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(200,146,58,0.5); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.08); color: var(--white);
+    font-weight: 500; font-size: 0.95rem;
+    padding: 0.75rem 1.75rem; border-radius: 10px;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.2);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.35); }
+  .hero-scroll {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    color: rgba(255,255,255,0.35); font-size: 0.75rem;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 3.5rem; padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    animation: fadeUp 0.7s 0.45s ease both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-size: 2rem; font-weight: 700; color: var(--gold-lt); line-height: 1; }
+  .hero-stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem; }
+
+  /* ── SECTIONS ────────────────────────────────────── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+    color: var(--mid); text-transform: uppercase;
+    display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--lgray); max-width: 60px; }
+  .section-title {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700; color: var(--forest);
+    line-height: 1.2; margin-bottom: 1rem;
+  }
+  .section-title em { color: var(--gold); font-style: normal; }
+  .section-desc { font-size: 1rem; color: var(--gray); max-width: 560px; line-height: 1.8; }
+
+  /* ── ABOUT ───────────────────────────────────────── */
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .about-visual {
+    position: relative; display: flex; justify-content: center;
+  }
+  .about-circle {
+    width: 320px; height: 320px; border-radius: 50%;
+    background: var(--forest);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; position: relative;
+  }
+  .about-circle::before {
+    content: '';
+    position: absolute; inset: -8px; border-radius: 50%;
+    border: 1px dashed rgba(200,146,58,0.4);
+  }
+  .about-circle::after {
+    content: '';
+    position: absolute; inset: -20px; border-radius: 50%;
+    border: 1px dashed rgba(200,146,58,0.15);
+  }
+  .about-circle-icon { width: 64px; height: 64px; margin-bottom: 1rem; }
+  .about-circle-text { color: var(--white); font-size: 0.95rem; font-weight: 500; line-height: 1.5; padding: 0 2rem; }
+  .about-circle-text strong { color: var(--gold-lt); font-size: 1.1rem; display: block; margin-bottom: 0.5rem; }
+  .about-badge-row {
+    position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 0.5rem;
+  }
+  .pill {
+    background: var(--gold); color: var(--white); font-size: 0.75rem; font-weight: 600;
+    padding: 0.3rem 0.85rem; border-radius: 100px; white-space: nowrap;
+  }
+  .pill.outline {
+    background: transparent; border: 1px solid var(--mid); color: var(--mid);
+  }
+  .about-features { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2.5rem; }
+  .feature-item { display: flex; gap: 1rem; align-items: flex-start; }
+  .feature-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--pale); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .feature-icon svg { width: 22px; height: 22px; color: var(--mid); }
+  .feature-text h4 { font-size: 0.95rem; font-weight: 600; color: var(--forest); margin-bottom: 0.2rem; }
+  .feature-text p { font-size: 0.875rem; color: var(--gray); line-height: 1.6; }
+
+  /* ── MISSION ─────────────────────────────────────── */
+  #mission { background: var(--forest); }
+  #mission .section-label { color: var(--mint); }
+  #mission .section-label::after { background: rgba(255,255,255,0.15); }
+  #mission .section-title { color: var(--white); }
+  #mission .section-desc { color: rgba(255,255,255,0.6); }
+  .mission-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem;
+  }
+  .mission-card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 2rem 1.5rem;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .mission-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-4px); }
+  .mission-card-num {
+    font-size: 2.5rem; font-weight: 900; color: rgba(200,146,58,0.2);
+    font-family: 'Cairo', sans-serif; line-height: 1; margin-bottom: 1rem;
+  }
+  .mission-card h3 { font-size: 1.05rem; font-weight: 600; color: var(--gold-lt); margin-bottom: 0.5rem; }
+  .mission-card p { font-size: 0.875rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
+
+  /* ── ELECTIONS ───────────────────────────────────── */
+  #elections { background: var(--cream); }
+  .timeline { position: relative; margin-top: 3rem; }
+  .timeline::before {
+    content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(to bottom, var(--pale), var(--mid), var(--pale));
+  }
+  .timeline-item {
+    display: grid; grid-template-columns: 1fr 48px;
+    gap: 1.5rem; margin-bottom: 2.5rem; align-items: start;
+  }
+  .timeline-content {
+    background: var(--white); border-radius: 14px; padding: 1.5rem;
+    border: 1px solid var(--lgray); box-shadow: var(--shadow);
+    position: relative;
+  }
+  .timeline-content::after {
+    content: ''; position: absolute; top: 20px; left: -8px;
+    width: 16px; height: 16px; border-radius: 2px;
+    background: var(--white); border: 1px solid var(--lgray);
+    transform: rotate(45deg);
+  }
+  .timeline-tag {
+    font-size: 0.75rem; font-weight: 600; color: var(--mid);
+    background: var(--pale); border-radius: 100px;
+    padding: 0.2rem 0.7rem; display: inline-block; margin-bottom: 0.5rem;
+  }
+  .timeline-content h4 { font-size: 1rem; font-weight: 600; color: var(--forest); margin-bottom: 0.4rem; }
+  .timeline-content p { font-size: 0.875rem; color: var(--gray); line-height: 1.65; }
+  .timeline-dot {
+    width: 48px; display: flex; justify-content: center; padding-top: 18px;
+    position: relative; z-index: 1;
+  }
+  .timeline-dot-inner {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--mid); border: 3px solid var(--cream);
+    box-shadow: 0 0 0 2px var(--mid);
+  }
+  .timeline-dot-inner.gold {
+    background: var(--gold); box-shadow: 0 0 0 2px var(--gold);
+  }
+
+  /* ── MEMBERSHIP STATS ────────────────────────────── */
+  .stats-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+  .stat-card {
+    background: var(--white); border-radius: 16px; padding: 1.75rem 1.5rem;
+    border: 1px solid var(--lgray); text-align: center;
+    box-shadow: var(--shadow); transition: transform 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-3px); }
+  .stat-card-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--pale); display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  .stat-card-icon svg { width: 24px; height: 24px; color: var(--mid); }
+  .stat-card-num { font-size: 2.2rem; font-weight: 700; color: var(--forest); line-height: 1; }
+  .stat-card-label { font-size: 0.82rem; color: var(--gray); margin-top: 0.4rem; }
+
+  /* ── CONTACT ─────────────────────────────────────── */
+  #contact { background: var(--white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+  .contact-info { display: flex; flex-direction: column; gap: 1.25rem; }
+  .contact-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.25rem; background: var(--cream); border-radius: 14px;
+    border: 1px solid var(--lgray);
+    text-decoration: none; color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .contact-item:hover { border-color: var(--mint); box-shadow: 0 2px 12px rgba(42,99,71,0.1); }
+  .contact-item-icon {
+    width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-item-icon.green { background: var(--pale); }
+  .contact-item-icon.blue { background: #E8F4FB; }
+  .contact-item-icon.fb { background: #E7EEF9; }
+  .contact-item-icon svg { width: 22px; height: 22px; }
+  .contact-item h4 { font-size: 0.82rem; font-weight: 500; color: var(--gray); margin-bottom: 0.15rem; }
+  .contact-item p { font-size: 0.95rem; font-weight: 600; color: var(--forest); }
+  .map-placeholder {
+    background: var(--forest); border-radius: 16px; overflow: hidden;
+    height: 320px; position: relative; display: flex; align-items: center; justify-content: center;
+  }
+  .map-pattern {
+    position: absolute; inset: 0; opacity: 0.08;
+    background-image: repeating-linear-gradient(0deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 40px),
+    repeating-linear-gradient(90deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 40px);
+  }
+  .map-pin {
+    position: relative; z-index: 1; text-align: center; color: var(--white);
+  }
+  .map-pin-icon {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(200,146,58,0.3); border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+  }
+  .map-pin-icon svg { width: 32px; height: 32px; }
+  .map-pin h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .map-pin p { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 2.5rem 2rem;
+    font-size: 0.85rem; line-height: 1.8;
+  }
+  footer strong { color: rgba(255,255,255,0.8); }
+  footer a { color: var(--gold-lt); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-hashtag {
+    display: inline-block; margin-top: 0.75rem;
+    color: var(--gold-lt); font-weight: 600; letter-spacing: 0.03em;
+  }
+
+  /* ── ANIMATIONS ──────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%       { transform: scale(1.5); opacity: 0.6; }
+  }
+  @keyframes scrollLine {
+    0%   { transform: scaleY(1); opacity: 1; }
+    50%  { transform: scaleY(0.6); opacity: 0.4; }
+    100% { transform: scaleY(1); opacity: 1; }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-visual { order: -1; }
+    .about-circle { width: 260px; height: 260px; }
+    .mission-grid { grid-template-columns: 1fr; }
+    .stats-strip { grid-template-columns: 1fr 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 580px) {
+    .stats-strip { grid-template-columns: 1fr; }
+    section { padding: 3.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+      </svg>
+    </div>
+    <div class="nav-title">
+      الهيئة النقابية لصيادلة المجتمع
+      <span>فرعية بحري – ولاية الخرطوم</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#about">عن الهيئة</a>
+    <a href="#mission">مهامنا</a>
+    <a href="#elections">الانتخابات</a>
+    <a href="#contact">التواصل</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-badge">
+    <span>ولاية الخرطوم · محلية مدينة بحري</span>
+  </div>
+
+  <div class="hero-emblem">
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="58" stroke="#C8923A" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+      <circle cx="60" cy="60" r="50" fill="#1B4D35" stroke="#C8923A" stroke-width="1.5"/>
+      <!-- Pharmacy cross -->
+      <rect x="47" y="36" width="26" height="48" rx="4" fill="#C8923A" opacity="0.9"/>
+      <rect x="36" y="47" width="48" height="26" rx="4" fill="#C8923A" opacity="0.9"/>
+      <rect x="49" y="38" width="22" height="44" rx="3" fill="#E8B96A"/>
+      <rect x="38" y="49" width="44" height="22" rx="3" fill="#E8B96A"/>
+      <!-- Star in center -->
+      <circle cx="60" cy="60" r="7" fill="#1B4D35"/>
+      <circle cx="60" cy="60" r="4" fill="#C8923A"/>
+    </svg>
+  </div>
+
+  <h1>الهيئة النقابية<br>لصيادلة المجتمع<br><em>فرعية بحري</em></h1>
+  <p class="hero-sub">نمثل ونحمي حقوق صيادلة المجتمع في محلية مدينة الخرطوم بحري ونعمل على الارتقاء بمهنة الصيدلة المجتمعية</p>
+
+  <div class="hero-actions">
+    <a href="#about" class="btn-primary">تعرف علينا</a>
+    <a href="https://www.facebook.com/The.Syndicate.of.Community.Ph.bahri/" target="_blank" rel="noopener" class="btn-secondary">صفحتنا على فيسبوك</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">٢٥٦</div>
+      <div class="hero-stat-label">عضو مسجل</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">٢٠</div>
+      <div class="hero-stat-label">ممثل منتخب</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">٢٠٢٢</div>
+      <div class="hero-stat-label">سنة التأسيس</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">بحري</div>
+      <div class="hero-stat-label">نطاق العمل</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>تمرير</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-content">
+        <p class="section-label">من نحن</p>
+        <h2 class="section-title">هيئة <em>نقابية</em> تعمل<br>من أجل الصيادلة</h2>
+        <p class="section-desc">
+          الهيئة النقابية لصيادلة المجتمع فرعية بحري هي أول تنظيم نقابي لصيادلة المجتمع بمحلية مدينة الخرطوم بحري،
+          وتعمل تحت مظلة الهيئة النقابية لصيادلة العاملين بولاية الخرطوم.
+        </p>
+        <div class="about-features">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="feature-text">
+              <h4>تمثيل الأعضاء</h4>
+              <p>تمثيل صيادلة المجتمع في المحافل النقابية والمهنية والدفاع عن مصالحهم المهنية والاقتصادية</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="feature-text">
+              <h4>الشفافية والنزاهة</h4>
+              <p>أُسِّست بانتخابات إلكترونية شفافة تحت إشراف مراقبين مستقلين، وتعمل وفق نظام أساسي مجاز</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <div class="feature-text">
+              <h4>التصويت الإلكتروني</h4>
+              <p>ريادة في توظيف التكنولوجيا عبر منصة رقمية متخصصة، مما يُعد تجربة رائدة في المجال النقابي</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="about-circle">
+          <svg class="about-circle-icon" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" fill="rgba(200,146,58,0.15)" stroke="#C8923A" stroke-width="1.5"/>
+            <rect x="24" y="16" width="16" height="32" rx="3" fill="#E8B96A" opacity="0.9"/>
+            <rect x="16" y="24" width="32" height="16" rx="3" fill="#E8B96A" opacity="0.9"/>
+          </svg>
+          <div class="about-circle-text">
+            <strong>صيادلة المجتمع</strong>
+            في خدمة صحة المجتمع<br>ببحري والخرطوم
+          </div>
+          <div class="about-badge-row">
+            <span class="pill">بحري</span>
+            <span class="pill">الخرطوم</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <div class="container">
+    <p class="section-label" style="color:var(--mint)">مهامنا وأهدافنا</p>
+    <h2 class="section-title" style="color:white">نعمل من أجل <em style="color:var(--gold-lt)">صيادلة بحري</em></h2>
+    <p class="section-desc" style="color:rgba(255,255,255,0.6)">ملتزمون بحماية الحقوق المهنية والاقتصادية لصيادلة المجتمع والارتقاء بجودة خدمات الصحة المجتمعية</p>
+
+    <div class="mission-grid reveal">
+      <div class="mission-card">
+        <div class="mission-card-num">٠١</div>
+        <h3>الدفاع عن الحقوق</h3>
+        <p>الدفاع عن الحقوق المهنية والاقتصادية لأعضاء الهيئة وصون كرامتهم في بيئة العمل</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-card-num">٠٢</div>
+        <h3>تطوير المهنة</h3>
+        <p>العمل على رفع الكفاءة المهنية لصيادلة المجتمع وتنظيم برامج التدريب والتطوير المستمر</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-card-num">٠٣</div>
+        <h3>التواصل النقابي</h3>
+        <p>التنسيق مع الهيئة النقابية للصيادلة العاملين وسائر النقابات في الدفاع عن قضايا المهنة</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-card-num">٠٤</div>
+        <h3>التوعية الصحية</h3>
+        <p>المساهمة في برامج التوعية الصحية المجتمعية ونشر ثقافة الدواء الرشيد بين المواطنين</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-card-num">٠٥</div>
+        <h3>مراقبة بيئة العمل</h3>
+        <p>العمل على تحسين بيئة العمل في الصيدليات المجتمعية وحماية حقوق صيادلة القطاع الخاص</p>
+      </div>
+      <div class="mission-card">
+        <div class="mission-card-num">٠٦</div>
+        <h3>الحوكمة والشفافية</h3>
+        <p>إدارة شؤون الهيئة بشفافية عالية عبر جمعيات عمومية منتظمة وإتاحة المعلومات لكافة الأعضاء</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ELECTIONS -->
+<section id="elections">
+  <div class="container">
+    <p class="section-label">الانتخابات والهيكل</p>
+    <h2 class="section-title">أول انتخابات <em>إلكترونية</em><br>لصيادلة بحري</h2>
+    <p class="section-desc">مسيرة التأسيس والانتخابات التاريخية التي أرست قواعد العمل النقابي المنظم لصيادلة المجتمع في محلية بحري</p>
+
+    <div class="stats-strip reveal">
+      <div class="stat-card">
+        <div class="stat-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="stat-card-num">٢٥٦</div>
+        <div class="stat-card-label">عضو في كشف الناخبين</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <div class="stat-card-num">٣٢</div>
+        <div class="stat-card-label">مرشح تقدم للانتخابات</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+          </svg>
+        </div>
+        <div class="stat-card-num">٢٠</div>
+        <div class="stat-card-label">ممثل منتخب للهيئة</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/>
+          </svg>
+        </div>
+        <div class="stat-card-num">١٠٠٪</div>
+        <div class="stat-card-label">تصويت إلكتروني</div>
+      </div>
+    </div>
+
+    <div class="timeline reveal" style="margin-top:3.5rem">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="timeline-tag">مارس ٢٠٢٢</span>
+          <h4>انعقاد الجمعية العمومية التأسيسية</h4>
+          <p>انعقدت الجمعية العمومية بحضور مراقب من الهيئة النقابية للصيادلة العاملين، وتمت إجازة النظام الأساسي للهيئة الفرعية</p>
+        </div>
+        <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="timeline-tag">١١ مارس ٢٠٢٢</span>
+          <h4>انطلاق الانتخابات الإلكترونية</h4>
+          <p>بدأت عملية الترشيح وانتخاب الممثلين إلكترونياً عبر منصة متخصصة، بمراقبة ممثلين من جامعة الخرطوم ومراقبين قانونيين ونقابيين</p>
+        </div>
+        <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="timeline-tag">طعون وتحقق</span>
+          <h4>مرحلة الطعون والمراجعة</h4>
+          <p>فُتح باب الطعون لمدة ٥ أيام تحت إشراف لجنة طعون منتخبة من الجمعية العمومية، ومرت العملية دون أي طعون</p>
+        </div>
+        <div class="timeline-dot"><div class="timeline-dot-inner"></div></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="timeline-tag">٢٢ مارس ٢٠٢٢</span>
+          <h4>إعلان المكاتب التنفيذية المنتخبة</h4>
+          <p>أُعلن عن الفائزين البالغ عددهم ٢٠ ممثلاً للمصعدين إلى الهيئة النقابية ثم المكتب التنفيذي للفرعية وفق النظام الأساسي المجاز</p>
+        </div>
+        <div class="timeline-dot"><div class="timeline-dot-inner gold"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">تواصل معنا</p>
+    <h2 class="section-title">نحن هنا <em>لخدمتك</em></h2>
+    <p class="section-desc">تواصل معنا عبر منصات التواصل الاجتماعي أو تفضل بزيارتنا في محلية مدينة الخرطوم بحري</p>
+
+    <div class="contact-grid reveal">
+      <div class="contact-info">
+        <a href="https://www.facebook.com/The.Syndicate.of.Community.Ph.bahri/" target="_blank" rel="noopener" class="contact-item">
+          <div class="contact-item-icon fb">
+            <svg viewBox="0 0 24 24" fill="#1877F2">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </div>
+          <div>
+            <h4>صفحة فيسبوك</h4>
+            <p>The.Syndicate.of.Community.Ph.bahri</p>
+          </div>
+        </a>
+
+        <div class="contact-item">
+          <div class="contact-item-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2A6347" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <h4>العنوان</h4>
+            <p>محلية مدينة الخرطوم بحري – ولاية الخرطوم – السودان</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2196F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.9 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <div>
+            <h4>الهاشتاق الرسمي</h4>
+            <p style="color:var(--mid); font-family:monospace;">#KeepEyeOnSudan</p>
+          </div>
+        </div>
+
+        <a href="https://www.facebook.com/The.Syndicate.of.Community.Ph.bahri/" target="_blank" rel="noopener" class="btn-primary" style="text-align:center; margin-top:0.5rem; display:block;">
+          انضم إلى مجتمعنا على فيسبوك
+        </a>
+      </div>
+
+      <div class="map-placeholder">
+        <div class="map-pattern"></div>
+        <div class="map-pin">
+          <div class="map-pin-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#E8B96A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <h3>الخرطوم بحري</h3>
+          <p>ولاية الخرطوم – السودان</p>
+          <p style="margin-top:0.5rem;font-size:0.78rem;opacity:0.45;">Khartoum North · Sudan</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>الهيئة النقابية لصيادلة المجتمع – فرعية بحري</strong><br>
+  ولاية الخرطوم · محلية مدينة بحري · السودان<br>
+  <a href="https://www.facebook.com/The.Syndicate.of.Community.Ph.bahri/" target="_blank" rel="noopener">facebook.com/The.Syndicate.of.Community.Ph.bahri</a>
+  <div class="footer-hashtag">#KeepEyeOnSudan</div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
